@@ -1,0 +1,66 @@
+atividade 1
+
+perguntas
+
+1.Quem solicita o serviço?
+O cliente ou usuário que precisa utilizar alguma função oferecida pelo sistema.
+
+2.Quem processa a solicitação?
+Um ou mais computadores responsáveis por receber a solicitação e realizar o processamento necessário.
+
+3.Onde os dados estão armazenados?
+Os dados podem ficar armazenados em diferentes computadores, servidores ou bancos de dados conectados pela rede.
+
+4.Como os componentes se comunicam?
+Eles se comunicam através de uma rede, trocando informações e mensagens entre si.
+
+5.O processamento está concentrado ou distribuído?
+O processamento é distribuído, pois as tarefas podem ser divididas entre vários computadores que trabalham juntos assim evitando gargalos e lentidão
+na entrega das respostas.
+
+
+Atividade 2
+
+servidor.py:
+
+import socket
+
+servidor = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+servidor.bind(("localhost", 5000))
+
+servidor.listen(1)
+
+print("servidor aguardando conexão...")
+
+conexao, endereco = servidor.accept()
+
+print("Cliente conectado:", endereco)
+
+mensagem = conexao.recv(1024).decode()
+
+print("Mensagem recebida:", mensagem)
+
+conexao.send("Olá! Mensagem recebida pelo servidor.".encode())
+
+conexao.close()
+servidor.close()
+
+
+
+
+cliente.py
+
+import socket
+
+cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+cliente.connect(("localhost", 5000))
+
+cliente.send("ola servidor! sou o cliente".encode())
+
+resposta = cliente.recv(1024).decode()
+
+print("Resposta do servidor:", resposta)
+
+cliente.close()
