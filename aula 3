@@ -1,0 +1,84 @@
+Desafio 1
+
+servidor
+
+import socket
+
+servidor = socket.socket(
+    socket.AF_INET,
+    socket.SOCK_DGRAM
+)
+
+servidor.bind(("localhost", 5000))
+
+print("Servidor UDP aguardando mensagens...")
+
+while True:
+
+    dados, endereco = servidor.recvfrom(1024)
+
+    mensagem = dados.decode()
+
+    print("Cliente:", endereco)
+    print("Mensagem:", mensagem)
+
+    resposta = "Servidor recebeu: " + mensagem
+
+    servidor.sendto(
+        resposta.encode(),
+        endereco
+    )
+
+
+cliente
+import socket
+
+cliente = socket.socket(
+    socket.AF_INET,
+    socket.SOCK_DGRAM
+)
+
+mensagem = input("Digite sua mensagem: ")
+
+cliente.sendto(
+    mensagem.encode(),
+    ("localhost", 5000)
+)
+
+dados, endereco = cliente.recvfrom(1024)
+
+print("Resposta do servidor:")
+print(dados.decode())
+
+cliente.close()
+
+
+terminal servidor:
+PS C:\Users\quelu\OneDrive\Desktop\aula de python-anhaguera\aula sistemas distribuidos\aula3_udp> python servidor_udp.py
+Servidor UDP aguardando mensagens...
+Cliente: ('127.0.0.1', 58923)
+Mensagem: ola mundo
+Cliente: ('127.0.0.1', 62144)
+Mensagem: ola novamente
+
+terminal cliente:
+C:\Users\quelu\OneDrive\Desktop\aula de python-anhaguera\aula sistemas distribuidos\aula3_udp> python cliente_udp.py
+Digite sua mensagem: ola novamente
+Resposta do servidor:
+Servidor recebeu: ola novamente
+
+C:\Users\quelu\OneDrive\Desktop\aula de python-anhaguera\aula sistemas distribuidos\aula3_udp>
+
+
+perguntas:
+o servidor peranece funcionando?
+rs: SIM
+
+Quantos clientes pode enviar mensagem para eles?
+rs: Infinitos
+
+
+
+
+
+
