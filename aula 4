@@ -1,0 +1,88 @@
+exercicio: 
+
+
+
+servidor:
+
+from xmlrpc.server import SimpleXMLRPCServer
+
+
+def soma(a, b):
+    return a + b
+
+
+def subtracao(a, b):
+    return a - b
+
+
+def multiplicacao(a, b):
+    return a * b
+
+
+servidor = SimpleXMLRPCServer(
+    ("localhost", 8000),
+    allow_none=True
+)
+
+servidor.register_function(soma, "soma")
+servidor.register_function(subtracao, "subtracao")
+servidor.register_function(multiplicacao, "multiplicacao")
+
+print("Servidor RPC rodando na porta 8000...")
+
+servidor.serve_forever()
+
+
+
+cliente:
+
+import xmlrpc.client
+
+servidor = xmlrpc.client.ServerProxy(
+    "http://localhost:8000"
+)
+
+print("10 + 5 =", servidor.soma(10, 5))
+print("10 - 5 =", servidor.subtracao(10, 5))
+print("10 * 5 =", servidor.multiplicacao(10, 5))
+
+
+terminal:
+servidor
+127.0.0.1 - - [16/Sep/2026 21:39:09] "POST /RPC2 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Sep/2026 21:39:11] "POST /RPC2 HTTP/1.1" 200 -
+127.0.0.1 - - [16/Sep/2026 21:39:13] "POST /RPC2 HTTP/1.1" 200 -
+
+cliente:
+python aula4/cliente_rcp.py
+10 + 5 = 15
+10 - 5 = 5
+10 * 5 = 50
+
+
+
+perguntas:
+
+1.Qual processo possui as funções soma(), subtracao() e multiplicacao()?
+O servidor possui essas funções e é responsável por executá-las.
+
+2.O cliente possui o código dessas operações?
+Não. O cliente apenas faz a chamada das funções disponíveis no servidor.
+
+3.Qual endereço e porta identificam o serviço?
+O serviço está disponível em localhost:8000.
+
+4.Quem inicia a chamada?
+O cliente inicia a chamada ao solicitar uma operação ao servidor.
+
+5.O resultado foi calculado no cliente ou no servidor?
+O resultado foi calculado no servidor e depois enviado de volta para o cliente.
+
+Qual diferença você percebe em relação ao código de sockets TCP da Aula 2?
+No XML-RPC, a comunicação é mais simples, pois o cliente chama funções do servidor diretamente. Nos sockets TCP, é necessário controlar manualmente
+a comunicação entre cliente e servidor, como envio e recebimento de mensagens.
+
+6.]Qual diferença você percebe em relação ao código de sockets TCP da Aula 2?
+No XML-RPC, a comunicação é mais simples, pois o cliente chama funções do servidor diretamente.
+Nos sockets TCP, é necessário controlar manualmente a comunicação entre cliente e servidor, 
+como envio e recebimento de mensagens.
