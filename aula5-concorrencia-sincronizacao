@@ -22,5 +22,27 @@ for i in range(10):
         t.join()
     print("Saldo esperado: 500")
     print("Saldo obtido", saldo)
+
+resultado terminal:
+Saldo esperado: 500
+Saldo obtido 50
+Saldo esperado: 500
+Saldo obtido 0
+Saldo esperado: 500
+Saldo obtido -50
+Saldo esperado: 500
+Saldo obtido -100
+Saldo esperado: 500
+Saldo obtido -150
+Saldo esperado: 500
+Saldo obtido -200
+Saldo esperado: 500
+Saldo obtido -250
+Saldo esperado: 500
+Saldo obtido -300
+Saldo esperado: 500
+Saldo obtido -350
+Saldo esperado: 500
+Saldo obtido -400
     
 
