@@ -3,7 +3,7 @@ corrida.py
 import threading
 import time
 
-saldo = 100
+saldo = 1000
 
 def sacar(valor):
     global saldo
@@ -25,24 +25,25 @@ for i in range(10):
 
 resultado terminal:
 Saldo esperado: 500
-Saldo obtido 50
+Saldo obtido 950
 Saldo esperado: 500
-Saldo obtido 0
+Saldo obtido 900
 Saldo esperado: 500
-Saldo obtido -50
+Saldo obtido 850
 Saldo esperado: 500
-Saldo obtido -100
+Saldo obtido 800
 Saldo esperado: 500
-Saldo obtido -150
+Saldo obtido 750
 Saldo esperado: 500
-Saldo obtido -200
+Saldo obtido 700
 Saldo esperado: 500
-Saldo obtido -250
+Saldo obtido 650
 Saldo esperado: 500
-Saldo obtido -300
+Saldo obtido 600
 Saldo esperado: 500
-Saldo obtido -350
+Saldo obtido 550
 Saldo esperado: 500
-Saldo obtido -400
+Saldo obtido 500
+
     
 
