@@ -56,3 +56,6 @@ Cliente 6 não conseguiu comprar: estoque esgotado
 Cliente 7 não conseguiu comprar: estoque esgotado
 Cliente 8 não conseguiu comprar: estoque esgotado
 Estoque final: 0
+
+1.Execute o estoque com o lock e registre o resultado
+rs:
