@@ -74,3 +74,21 @@ C.receber("Pode faturar", tempo_B_C)
 
 C.evento_local("enviou nota fiscal")
 
+
+resultado do terminal:
+Processo A processou pedido | relógio = 1
+Processo A validou pagamento | relógio = 2
+Processo B consultou estoque | relógio = 1
+Processo A ENVIA: Pagamento aprovado | relógio = 3
+Processo B RECEBE: Pagamento aprovado | relógio = 4
+Processo B reservou estoque | relógio = 5
+Processo B ENVIA: Estoque reservado | relógio = 6
+Processo A RECEBE: Estoque reservado | relógio = 7
+Processo A finalizou o pedido | relógio = 8
+Processo C gerou nota fiscal | relógio = 1
+Processo A ENVIA: Pedido confirmado | relógio = 9
+Processo B RECEBE: Pedido confirmado | relógio = 10
+Processo B ENVIA: Pode faturar | relógio = 11
+Processo C RECEBE: Pode faturar | relógio = 12
+Processo C enviou nota fiscal | relógio = 13
+
