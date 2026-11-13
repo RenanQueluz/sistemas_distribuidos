@@ -1,0 +1,150 @@
+PASSO 1 IMPORTANDO AS FERRAMENTAS:
+
+import threading
+import queue
+import time
+
+fila = queue.Queue()
+
+def produtor():
+
+
+    for tarefa in range(1, 7):
+        print(
+            "Produzindo tarefa",
+            tarefa
+        )
+        fila.put(tarefa)
+        time.sleep(0.3)
+
+
+PASSO 2 CONSUMIDOR:
+def consumidor(nome):
+    while True:
+        tarefa = fila.get()
+
+        if tarefa is None:
+            fila.task_done()
+            break
+
+        print(
+            nome,
+            "processando",
+            tarefa
+        )
+
+        time.sleep(1)
+        fila.task_done()
+
+
+PASSO 3 CRIANDO OS CONSUMIDORES:
+
+c1 = threading.Thread(
+    target=consumidor,
+    args=("Consumidor A",)
+)
+
+c2 = threading.Thread(
+    target=consumidor,
+    args=("Consumidor B",)
+)
+
+c1.start()
+c2.start()
+
+
+
+PASSO 4 EXECUTANDO O PRODUTOR:
+produtor()
+
+fila.join()
+
+fila.put(None)
+fila.put(None)
+
+c1.join()
+c2.join()
+
+print(
+    "Todas as tarefas terminaram."
+)
+
+
+RESULTADO DO TERMINAL:
+Produzindo tarefa 1
+Consumidor A processando 1
+Produzindo tarefa 2
+Consumidor B processando 2
+Produzindo tarefa 3
+Produzindo tarefa 4
+Consumidor A processando 3
+Produzindo tarefa 5
+Consumidor B processando 4
+Produzindo tarefa 6
+Consumidor A processando 5
+Consumidor B processando 6
+Todas as tarefas terminaram.
+
+PASSO 6 ADICIONANDO SEMAFORO:
+limite = threading.Semaphore(2)
+
+def tarefa_pesada(nome, numero):
+    with limite:
+        print(
+            nome,
+            "INICIOU tarefa",
+            numero
+        )
+
+        time.sleep(2)
+
+        print(
+            nome,
+            "FINALIZOU tarefa",
+            numero
+        )
+
+PASSO 7 TESTE DE LIMITE:
+
+threads = []
+
+for i in range(1, 7):
+    t = threading.Thread(
+        target=tarefa_pesada,
+        args=(f"Worker {i}", i)
+    )
+
+    threads.append(t)
+    t.start()
+
+for t in threads:
+    t.join()
+
+
+RESULTADO  NO TERMINAL:
+
+Produzindo tarefa 1
+Consumidor A processando 1
+Produzindo tarefa 2
+Consumidor B processando 2
+Produzindo tarefa 3
+Produzindo tarefa 4
+Consumidor A processando 3
+Produzindo tarefa 5
+Consumidor B processando 4
+Produzindo tarefa 6
+Consumidor A processando 5
+Consumidor B processando 6
+Todas as tarefas terminaram.
+Worker 1 INICIOU tarefa 1
+Worker 2 INICIOU tarefa 2
+Worker 2 FINALIZOU tarefa 2
+Worker 1 FINALIZOU tarefa 1
+Worker 3 INICIOU tarefa 3
+Worker 4 INICIOU tarefa 4
+Worker 3 FINALIZOU tarefa 3
+Worker 5 INICIOU tarefa 5
+Worker 4 FINALIZOU tarefa 4
+Worker 6 INICIOU tarefa 6
+Worker 5 FINALIZOU tarefa 5
+Worker 6 FINALIZOU tarefa 6
