@@ -91,6 +91,45 @@ PS C:\Users\quelu\OneDrive\Desktop\aula de python-anhaguera> python cliente.py
 Seu nome: josé
 Mensagem: ola amigo
 Servidor respondeu: Mensagem processada pelo servidor
-PS C:\Users\quelu\OneDrive\Desktop\aula de python-anhaguera> 
+
+
+RESPONDENDO QUESTOES:
+
+EVIDÊNCIA 1
+Mostre no terminal três clientes conectando ao mesmo servidor.
+PS C:\Users\quelu\OneDrive\Desktop\aula de python-anhaguera> & 'C:\Users\quelu\AppData\Local\Programs\Python\Python313\python.exe' '"c:/Users/quelu/OneDrive/Desktop/aula de python-anhaguera/servidor.py"'
+Servidor ativo na porta 5000
+Cliente conectado: ('127.0.0.1', 56373)
+Threads ativas: 1
+Recebido de ('127.0.0.1', 56373):
+ana: ola, a todos
+Cliente conectado: ('127.0.0.1', 56377)
+Threads ativas: 1
+Recebido de ('127.0.0.1', 56377):
+joão: boa tarde
+Cliente conectado: ('127.0.0.1', 56379)
+Threads ativas: 1
+Recebido de ('127.0.0.1', 56379):
+jorel: boa noite ana
+
+
+EVIDÊNCIA 2
+Explique por que o processo principal continua aceitando conexões.
+
+RS: Porque o servidor utiliza Threads para atender cada cliente separadamente. Dessa forma, 
+o processo principal não precisa esperar uma conexão terminar para aceitar outra, 
+pois cada atendimento acontece em uma Thread independente.
+
+
+
+EVIDÊNCIA 3:
+Identifique um recurso que precisaria de lock se fosse compartilhado.
+
+RS: Um contador global de clientes atendidos. Como várias Threads poderiam tentar modificar esse contador simultaneamente, 
+seria necessário utilizar um Lock para evitar condições de corrida e garantir que os valores fossem atualizados corretamente.
+
+
+
+
 
 
