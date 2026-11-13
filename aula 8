@@ -1,0 +1,96 @@
+
+SERVIDOR:
+PASSO 1:
+
+import socket
+import threading
+
+HOST = "0.0.0.0"
+PORTA = 5000
+
+servidor = socket.socket(
+    socket.AF_INET,
+    socket.SOCK_STREAM
+)
+
+servidor.bind((HOST, PORTA))
+servidor.listen()
+
+print(f"Servidor ativo na porta {PORTA}")
+
+
+PASSO 2:
+
+def atender_cliente(conexao, endereco):
+    print(f"Cliente conectado: {endereco}")
+
+    dados = conexao.recv(1024)
+    mensagem = dados.decode()
+
+    print(f"Recebido de {endereco}:")
+    print(mensagem)
+
+    resposta = "Mensagem processada pelo servidor"
+    conexao.send(resposta.encode())
+
+    conexao.close()
+
+PASSO 3:
+
+while True:
+    conexao, endereco = servidor.accept()
+
+    thread = threading.Thread(
+        target=atender_cliente,
+        args=(conexao, endereco)
+    )
+
+    thread.start()
+
+    print(
+        "Threads ativas:",
+        threading.active_count() - 1
+    )
+
+
+
+CLIENTE:
+
+import socket
+
+HOST = "127.0.0.1"
+PORTA = 5000
+
+nome = input("Seu nome: ")
+texto = input("Mensagem: ")
+
+cliente = socket.socket(
+    socket.AF_INET,
+    socket.SOCK_STREAM
+)
+
+cliente.connect((HOST, PORTA))
+cliente.send(f"{nome}: {texto}".encode())
+
+resposta = cliente.recv(1024).decode()
+print("Servidor respondeu:", resposta)
+
+cliente.close()
+
+
+TERMINAL SERVIDOR:
+Servidor ativo na porta 5000
+Cliente conectado: ('127.0.0.1', 56959)
+Threads ativas: 1
+Recebido de ('127.0.0.1', 56959):
+josé: ola amigo
+
+
+TERMINAL CLIENTE:
+PS C:\Users\quelu\OneDrive\Desktop\aula de python-anhaguera> python cliente.py
+Seu nome: josé
+Mensagem: ola amigo
+Servidor respondeu: Mensagem processada pelo servidor
+PS C:\Users\quelu\OneDrive\Desktop\aula de python-anhaguera> 
+
+
