@@ -148,3 +148,24 @@ Worker 4 FINALIZOU tarefa 4
 Worker 6 INICIOU tarefa 6
 Worker 5 FINALIZOU tarefa 5
 Worker 6 FINALIZOU tarefa 6
+
+
+RESPONDENDO QUESTÕES SOBRE A AULA:
+
+1. Qual valor você usaria no semáforo?
+
+Eu utilizaria o valor 2, pois o semáforo é responsável por controlar a quantidade de operações que podem acessar determinado recurso simultaneamente. 
+Como o serviço externo suporta apenas duas operações ao mesmo tempo, o semáforo deve permitir somente duas solicitações por vez. 
+As demais precisam aguardar até que uma das operações seja finalizada e libere o acesso.
+
+2. O que pode acontecer se não houver limite?
+
+Se não existir um limite de acesso, todas as seis solicitações poderão tentar utilizar o serviço externo simultaneamente. 
+Isso pode provocar uma sobrecarga, aumentando o tempo de resposta e causando falhas no processamento. Dependendo da capacidade do serviço, 
+ele pode ficar temporariamente indisponível ou até parar de responder.
+
+3. Em que situação uma fila seria útil antes de acessar esse serviço?
+
+Uma fila seria útil quando a quantidade de solicitações recebidas fosse maior do que a capacidade de processamento do serviço externo. 
+Ela organizaria as solicitações por ordem de chegada, permitindo que fossem atendidas conforme as operações anteriores fossem finalizadas. 
+Dessa maneira, nenhuma solicitação precisaria tentar acessar o serviço antes de sua vez, ajudando a manter a organização e evitar sobrecargas.
