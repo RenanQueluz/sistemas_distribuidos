@@ -150,3 +150,24 @@ Servico A obteve os dois recursos
 Servico B obteve recurso 1
 Servico B aguarda recurso 2
 Servico B obteve os dois recursos
+
+
+RESPONDENDO QUESTÕES:
+
+1. Por que a segunda versão não forma a mesma espera circular?
+Porque os dois serviços passaram a solicitar os recursos na mesma ordem: primeiro o recurso 1 e depois o recurso 2.
+Isso evita que um serviço fique esperando por um recurso que está sendo utilizado pelo outro.
+
+2. Altere a ordem novamente em apenas um dos serviços e observe o comportamento.
+Ao alterar a ordem de aquisição em apenas um serviço, pode ocorrer novamente um Deadlock,
+pois os serviços podem ficar esperando pelos recursos que estão ocupados um pelo outro.
+
+3. Teste diferentes valores de timeout.
+O timeout determina quanto tempo um serviço pode esperar por um recurso antes de desistir. Quanto menor o valor, mais rápido ele interrompe a tentativa.
+
+4. Identifique qual das quatro condições de deadlock foi quebrada na versão corrigida.
+A condição quebrada foi a espera circular, pois os dois serviços passaram a seguir a mesma ordem de aquisição dos recursos.
+
+5. Relacione o exemplo a dois serviços reais disputando banco de dados, arquivo ou conexão.
+Dois serviços podem tentar acessar e modificar informações de um mesmo banco de dados. Se adquirirem os recursos em ordens diferentes, 
+podem ficar bloqueados esperando um pelo outro. Para evitar isso, é importante estabelecer uma ordem única de acesso aos recursos.
