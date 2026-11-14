@@ -1,0 +1,152 @@
+PASSO 1 RECURSOS COMPARTILHADOS
+
+import threading
+import time
+
+recurso_1 = threading.Lock()
+recurso_2 = threading.Lock()
+
+print(
+    "Simulacao de deadlock iniciada"
+)
+
+PASSO 2 SERVIÇO A
+
+def servico_a():
+    print("A: aguardando recurso 1")
+
+    with recurso_1:
+        print("A: obteve recurso 1")
+        time.sleep(1)
+
+        print("A: aguardando recurso 2")
+
+        conseguiu = recurso_2.acquire(
+            timeout=3
+        )
+
+PASSO 3 FINALIZANDO O SERVIÇO A
+
+        if conseguiu:
+            print("A: obteve recurso 2")
+            recurso_2.release()
+        else:
+            print(
+                "A: timeout no recurso 2"
+            )
+
+    print("A: finalizado")
+
+
+PASSO 4 SERVIÇO B
+
+def servico_b():
+    print("B: aguardando recurso 2")
+
+    with recurso_2:
+        print("B: obteve recurso 2")
+        time.sleep(1)
+
+        print("B: aguardando recurso 1")
+
+        conseguiu = recurso_1.acquire(
+            timeout=3
+        )
+PASSO 5 FINALIZANDO SERVIÇO B
+
+        if conseguiu:
+            print("B: obteve recurso 1")
+            recurso_1.release()
+        else:
+            print(
+                "B: timeout no recurso 1"
+            )
+
+    print("B: finalizado")
+
+PASSO 6 CRIANDO AS THREADS:
+
+t1 = threading.Thread(
+    target=servico_a
+)
+
+t2 = threading.Thread(
+    target=servico_b
+)
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+
+PASSO 7 EXECUTANTO O CÓDIGO:
+Simulacao de deadlock iniciada
+A: aguardando recurso 1
+A: obteve recurso 1
+B: aguardando recurso 2
+B: obteve recurso 2
+B: aguardando recurso 1
+A: aguardando recurso 2
+A: timeout no recurso 2
+B: timeout no recurso 1
+B: finalizado
+A: finalizado
+
+
+CORREÇÃO DA MESMA ORDEM DE AQUISIÇÃO:
+
+def servico(nome):
+    print(nome, "aguarda recurso 1")
+
+    with recurso_1:
+        print(nome, "obteve recurso 1")
+        time.sleep(0.5)
+
+        print(nome, "aguarda recurso 2")
+
+        with recurso_2:
+            print(
+                nome,
+                "obteve os dois recursos"
+            )
+
+TESTE DE DOIS SERVIÇOS:
+
+t1 = threading.Thread(
+    target=servico,
+    args=("Servico A",)
+)
+
+t2 = threading.Thread(
+    target=servico,
+    args=("Servico B",)
+)
+
+t1.start()
+t2.start()
+
+t1.join()
+t2.join()
+
+
+EXECUTANDO O TERMINAL:
+Simulacao de deadlock iniciada
+A: aguardando recurso 1
+A: obteve recurso 1
+B: aguardando recurso 2
+B: obteve recurso 2
+A: aguardando recurso 2
+B: aguardando recurso 1
+B: timeout no recurso 1
+A: timeout no recurso 2
+A: finalizado
+B: finalizado
+Servico A aguarda recurso 1
+Servico A obteve recurso 1
+Servico B aguarda recurso 1
+Servico A aguarda recurso 2
+Servico A obteve os dois recursos
+Servico B obteve recurso 1
+Servico B aguarda recurso 2
+Servico B obteve os dois recursos
